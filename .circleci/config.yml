@@ -93,11 +93,11 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Back-end build
+          name: Back-end unit test
           command: |
             cd backend 
             npm install
-            npm run build
+            npm test
 
 #   scan-frontend:
 #     docker:
