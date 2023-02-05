@@ -185,6 +185,11 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
             echo $BACKEND_PUBLIC_IP >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
+      - run:
+          name: Install tar, gzip
+          command: |
+            yum -y install tar gzip
 
       - persist_to_workspace:
           root: ~/
