@@ -162,6 +162,9 @@ jobs:
       - run:
           name: Ensure back-end infrastructure exists
           command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=your-tag \
