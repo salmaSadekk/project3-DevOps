@@ -227,7 +227,7 @@ jobs:
             
 
       - destroy-environment:
-          WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
+          workflow_ID: "${CIRCLE_WORKFLOW_ID:0:7}"
 #   run-migrations:
 #     docker:
 #       # Docker image here that supports NodeJS
