@@ -1,14 +1,19 @@
 ---
 
-- name: "Node.js config"
-  become: true
-  shell: |
-    curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash - &&\ 
-
-- name: "Install node.js 13"
+- name: "apt packages update "
   become: true
   apt:
-    name: ["node.js"]
+    update_cache: yes
+
+- name: "packages upgrade"
+  become: true
+  apt:
+    upgrade: yes
+
+- name: "installing dependencies"
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
 
