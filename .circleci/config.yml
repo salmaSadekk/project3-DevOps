@@ -224,9 +224,10 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
+            
 
-      - destroy-environment
-
+      - destroy-environment:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
 #   run-migrations:
 #     docker:
 #       # Docker image here that supports NodeJS
