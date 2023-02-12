@@ -7,7 +7,8 @@ commands:
       - run:
           name: Install AWS CLIv2
           command: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"         
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"    
+            apt install zip    -y 
             unzip awscliv2.zip
             sudo ./aws/install
   install_ansible:
@@ -228,10 +229,10 @@ jobs:
           workflow_ID: "${CIRCLE_WORKFLOW_ID:0:7}"
   run-migrations:
     docker:
-      - image: python:3.7-alpine3.11
+      - image:  cimg/node:13.8.0
     steps:
       - checkout
-
+      - install_awscli
       - restore_cache:
           keys: [backend-build]
       - run:
