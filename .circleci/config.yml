@@ -208,8 +208,7 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - install_ansible
-      - install_awscli
+
       - add_ssh_keys: 
           fingerprints: ["65:c5:55:a1:16:c2:42:18:d0:d6:c2:17:41:12:56:cf"]
       - attach_workspace:
@@ -231,13 +230,17 @@ jobs:
           workflow_ID: "${CIRCLE_WORKFLOW_ID:0:7}"
   run-migrations:
     docker:
-      - image: cimg/node:13.8.0
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - install_ansible
-      - install_awscli
+
       - restore_cache:
           keys: [backend-build]
+      - run:
+          name: Install aws/ansible dependencies
+          command: |
+            apk  add  --update ansible openssh
+            pip3 install  awscli
       - run:
           name: Run migrations
           command: |
