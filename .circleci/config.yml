@@ -256,7 +256,7 @@ jobs:
             then
               curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             else
-              echo "No pending migrations - Done" 
+              echo "No pending migrations" 
             fi
             - destroy-environment
             - revert-migrations
