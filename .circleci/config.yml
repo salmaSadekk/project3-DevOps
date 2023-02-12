@@ -232,14 +232,14 @@ jobs:
       - image:  cimg/node:13.8.0
     steps:
       - checkout
-      - install_awscli
+
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Install aws/ansible dependencies
+          name: Install AWS
           command: |
-            apk  add  --update ansible openssh
-            pip3 install  awscli
+            sudo apt update
+            sudo apt install awscli
       - run:
           name: Run migrations
           command: |
