@@ -281,7 +281,7 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      - install_nodejs
+      - install_node13
       - restore_cache:
           keys: [backend-deps] 
  
@@ -316,7 +316,7 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      - install_nodejs
+      - install_node13
       - install_ansible 
       - add_ssh_keys: 
           fingerprints: ["65:c5:55:a1:16:c2:42:18:d0:d6:c2:17:41:12:56:cf"]
