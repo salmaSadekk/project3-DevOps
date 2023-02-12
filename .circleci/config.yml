@@ -239,7 +239,9 @@ jobs:
           name: Install AWS
           command: |
             sudo apt update
-            sudo apt install awscli -y
+            sudo apt-get -y -qq update
+            sudo apt-get -y -qq install python3
+            sudo apt-get -qq install awscli
       - run:
           name: Run migrations
           command: |
