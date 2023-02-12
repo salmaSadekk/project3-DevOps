@@ -252,9 +252,11 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
+            cat  ~/project/backend/dumps.txt
             if grep -q "has been executed successfully." ~/project/backend/dumps.txt
             then
-              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              echo "here"
+              curl https://kvdb.io/AvjjsrXAgvKLfZtnYLDhkp/migration_${CIRCLE_WORKFLOW_ID:0:7} -k -d '1'
             else
               echo "No pending migrations" 
             fi
