@@ -342,10 +342,14 @@ jobs:
             export TYPEORM_MIGRATIONS_DIR=./migrations
             export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
             export TYPEORM_MIGRATIONS=./migrations/*.ts
-
+            cd backend
+            tar -czf artifact.tar.gz dist/* package*
+            cd .circleci
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
+            ps -aux | grep 3030 
       - destroy-environment
       - revert-migrations
 
