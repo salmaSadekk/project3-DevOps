@@ -8,13 +8,16 @@
   unarchive:
     src:  ~/project/artifact.tar.gz
     dest: ~/backend
-
-
-- name: "Node install and Node app Execution using PM2"
+    
+- name: "create environment variables"
   shell: |
     echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
     echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
     echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
+
+- name: "Node install and Node app Execution using PM2"
+  shell: |
+
     cd /home/ubuntu/backend/backend
     npm install
     cd /home/ubuntu/backend/backend/dist
