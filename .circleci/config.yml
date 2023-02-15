@@ -343,7 +343,6 @@ jobs:
             export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
             export TYPEORM_MIGRATIONS=./migrations/*.ts
             pwd 
-            ls -lR /
             tar  -czvf artifact.tar.gz     backend/dist/* backend/package*
             cd .circleci/ansible
             cat inventory.txt
