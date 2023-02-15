@@ -334,7 +334,7 @@ jobs:
           name: build
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
       - run:
           name: Deploy backend
@@ -343,7 +343,8 @@ jobs:
             export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
             export TYPEORM_MIGRATIONS=./migrations/*.ts
             pwd 
-            tar -C backend -czvf artifact.tar.gz  
+            ls -lR /
+            tar  -czvf artifact.tar.gz     backend/dist/* backend/package*
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
