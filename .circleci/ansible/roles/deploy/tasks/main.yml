@@ -18,11 +18,10 @@
 - name: "Node install and Node app Execution using PM2"
   shell: |
     cd /home/ubuntu/backend/backend
-    npm i -g npm
     npm install
     cd /home/ubuntu/backend/backend/dist
     pm2 stop default
-    pm2 start npm --start
+    pm2 start npm -- start
 
   register: execute_node
 
