@@ -348,8 +348,8 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
             ps -aux | grep 3030 
-      - destroy-environment
-      - revert-migrations
+#      - destroy-environment
+#      - revert-migrations
 
 #   smoke-test:
 #     docker:
