@@ -6,16 +6,14 @@
 
 - name: "Ungzip backend archive"
   unarchive:
-    src: artifact.tar.gz
+    src:  ~/project/artifact.tar.gz
     dest: ~/backend
 
-- name: "Install node dep"
+
+- name: "Node install and Node app Execution using PM2"
   shell: |
     cd ~/backend
     npm install
-
-- name: "Node app Execution using PM2"
-  shell: |
     cd ~/backend/dist
     pm2 stop default
     pm2 start main.js
