@@ -353,11 +353,13 @@ jobs:
 
   smoke-test:
     docker:
-      - image:  cimg/base:stable  
+      - image:  alpine
     steps:
       - checkout
-      - install_node13
-      - install_ansible 
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update curl nodejs npm aws-cli
       - run:
           name: Install AWS
           command: |
