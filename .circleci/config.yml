@@ -353,16 +353,16 @@ jobs:
 
   smoke-test:
     docker:
-      - image:  python:3.7-alpine3.11
+      - image:  cimg/base:stable  
     steps:
       - checkout
       - install_node13
       - install_ansible 
       - run:
-          name: Install node/awscli
+          name: Install AWS
           command: |
-            apk add --update curl nodejs npm
-            pip install awscli
+            sudo apt update
+            sudo apt  install awscli -y 
       - run:
           name: Get backend url
           command: |
