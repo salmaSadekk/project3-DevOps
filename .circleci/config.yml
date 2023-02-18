@@ -316,7 +316,7 @@ jobs:
       - revert-migrations
   deploy-backend:
     docker:
-      - image:  cimg/base:stable      # Docker image here that supports Ansible
+      - image:   cimg/node:13.8.0      # Docker image here that supports Ansible
     steps:
       - checkout
       - install_node13
@@ -353,7 +353,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image:  cimg/base:stable  
+      - image:    cimg/node:13.8.0  
     steps:
       - checkout
       - install_node13
