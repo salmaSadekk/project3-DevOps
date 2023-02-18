@@ -359,6 +359,11 @@ jobs:
       - install_node13
       - install_ansible 
       - run:
+          name: Install AWS
+          command: |
+            sudo apt update
+            sudo apt  install awscli -y 
+      - run:
           name: Get backend url
           command: |
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
