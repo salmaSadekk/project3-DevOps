@@ -316,94 +316,64 @@ jobs:
       - revert-migrations
   deploy-backend:
     docker:
-      - image: python:3.8-alpine3.15
-  # Docker image here that supports Ansible
+      - image:  cimg/base:stable      # Docker image here that supports Ansible
     steps:
       - checkout
-
+      - install_node13
+      - install_ansible 
       - add_ssh_keys: 
           fingerprints: ["65:c5:55:a1:16:c2:42:18:d0:d6:c2:17:41:12:56:cf"]
       - attach_workspace:
           at: ~/
-      - restore_cache:
-                keys: [backend-build]
       - run:
-          name: Install dependencies
+          name: Install AWS
           command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
+            sudo apt update
+            sudo apt  install awscli -y 
       - run:
-          name: Package Backend
+          name: build
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
-            cd ..
-            
-            # Zip the directory
-            tar -C backend -czvf build-artifact.tar.gz .
-            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            mv build-artifact.tar.gz .circleci/ansible/roles/deploy/files/build-artifact.tar.gz
       - run:
           name: Deploy backend
           command: |
+            export TYPEORM_MIGRATIONS_DIR=./migrations
+            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+            export TYPEORM_MIGRATIONS=./migrations/*.ts
+            pwd 
+            tar  -czvf artifact.tar.gz     backend/dist/* backend/package*
             cd .circleci/ansible
-            echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            
-            echo "Deploying backend"
             ansible-playbook -i inventory.txt deploy-backend.yml
-      - destroy-environment
-      - revert-migrations
+            ps -aux | grep 3030 
+#      - destroy-environment
+#      - revert-migrations
 
-  # smoke-test:
-  #   docker:
-  #  #   - image:  alpine
-  #     - image:   python:3.8-alpine3.15 
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           apk add --update --no-cache curl aws-cli nodejs npm
-  #     - run:
-  #         name: Install AWS
-  #         command: |
-  #           sudo apt update
-  #           sudo apt  install awscli -y 
-  #     - run:
-  #         name: Get backend url
-  #         command: |
-  #           BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
-  #             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-  #             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-  #             --output text)
+#   smoke-test:
+#     docker:
+#       # Lightweight Docker image
+#     steps:
+#       # Checkout code from git
+#       - run:
+#           name: Install dependencies
+#           command: |
+#             # your code here
+#       - run:
+#           name: Get backend url
+#           command: |
+#             # your code here
+#       - run:
+#           name: Backend smoke test.
+#           command: |
+#             # your code here
+#       - run:
+#           name: Frontend smoke test.
+#           command: |
+#             # your code here
+#       # Here's where you will add some code to rollback on failure
 
-  #           echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030" >> frontend/.env
-  #     - run:
-  #         name: Backend smoke test.
-  #         command: |
-  #           if curl -s $API_URL/api/status | grep "ok"
-  #           then
-  #               echo "success"
-  #               exit 0
-
-  #           else
-  #               echo "fail"
-  #               exit 1
-  #           fi
-  #     - run:
-  #         name: Frontend smoke test.
-  #         command: |
-  #           frontend=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
-  #           if curl  -s  $frontend  |  grep  "Welcome"
-  #           then
-  #               exit 0
-  #           else
-  #               exit 1
-  #           fi
-      # Here's where you will add some code to rollback on failure
-    #  - destroy-environment
-    #  - revert-migrations
 #   cloudfront-update:
 #     docker:
 #       # Docker image here that supports AWS CLI
