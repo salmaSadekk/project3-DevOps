@@ -316,11 +316,12 @@ jobs:
       - revert-migrations
   deploy-backend:
     docker:
-      - image:  cimg/base:stable      # Docker image here that supports Ansible
+    #  - image:  cimg/base:stable    
+      - image:   python:3.8-alpine3.15   # Docker image here that supports Ansible
     steps:
       - checkout
-      - install_node13
-      - install_ansible 
+    #  - install_node13
+     # - install_ansible 
       - add_ssh_keys: 
           fingerprints: ["65:c5:55:a1:16:c2:42:18:d0:d6:c2:17:41:12:56:cf"]
       - attach_workspace:
@@ -328,8 +329,7 @@ jobs:
       - run:
           name: Install AWS
           command: |
-            sudo apt update
-            sudo apt  install awscli -y 
+            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
       - run:
           name: build
           command: |
@@ -353,13 +353,14 @@ jobs:
 
   smoke-test:
     docker:
-      - image:  alpine
+   #   - image:  alpine
+      - image:   python:3.8-alpine3.15 
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl nodejs npm aws-cli
+            apk add --update --no-cache curl aws-cli nodejs npm
       - run:
           name: Install AWS
           command: |
