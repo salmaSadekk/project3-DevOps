@@ -316,7 +316,7 @@ jobs:
       - revert-migrations
   deploy-backend:
     docker:
-      - image:   cimg/node:13.8.0      # Docker image here that supports Ansible
+      - image:  cimg/base:stable      # Docker image here that supports Ansible
     steps:
       - checkout
       - install_node13
@@ -353,16 +353,16 @@ jobs:
 
   smoke-test:
     docker:
-      - image:    cimg/node:13.8.0  
+      - image:  python:3.7-alpine3.11
     steps:
       - checkout
       - install_node13
       - install_ansible 
       - run:
-          name: Install AWS
+          name: Install node/awscli
           command: |
-            sudo apt update
-            sudo apt  install awscli -y 
+            apk add --update curl nodejs npm
+            pip install awscli
       - run:
           name: Get backend url
           command: |
