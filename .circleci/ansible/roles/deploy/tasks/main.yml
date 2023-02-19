@@ -9,9 +9,12 @@
     src:  ~/project/artifact.tar.gz
     dest: ~/backend
 
-- name: "create environment variables"
-  shell: |
 
+- name: "Node install and Node app Execution using PM2"
+  shell: |
+    cd /home/ubuntu/backend/backend
+    npm install
+    cd /home/ubuntu/backend/backend/dist
     echo "TYPEORM_CONNECTION=${TYPEORM_CONNECTION}" >> "backend/backend/dist/.env"
     echo "TYPEORM_ENTITIES=${TYPEORM_ENTITIES}" >> "backend/backend/dist/.env"
     echo "TYPEORM_HOST=${TYPEORM_HOST}" >> "backend/backend/dist/.env"
@@ -21,12 +24,6 @@
     echo "TYPEORM_DATABASE=${TYPEORM_DATABASE}" >> "backend/backend/dist/.env"
     echo "TYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}" >> "backend/backend/dist/.env"
     echo "TYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR}" >> "backend/backend/dist/.env"
-
-- name: "Node install and Node app Execution using PM2"
-  shell: |
-    cd /home/ubuntu/backend/backend
-    npm install
-    cd /home/ubuntu/backend/backend/dist
     pm2 stop default
     pm2 start npm -- run "start:dev"
 
