@@ -12,18 +12,11 @@
 
 - name: "installing dependencies"
   become: true
-  apt:
-    name: ["nodejs", "npm"]
-    state: latest
-    update_cache: yes
+  become_user: root
+  shell: "source /root/.nvm/nvm.sh && nvm install 13.0.0" 
+  args:
+    executable: /bin/bash
 
-- name: "habd"
-  shell: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-            export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            source ~/.bashrc
-            nvm -v
-            nvm install 13.0.0
 
 - name: "Install PM2 Globally"
   npm:
