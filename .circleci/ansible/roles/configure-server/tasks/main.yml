@@ -12,11 +12,15 @@
 
 - name: "installing dependencies"
   become: true
-  become_user: root
-  shell: "source /root/.nvm/nvm.sh && nvm install 13.0.0" 
-  args:
-    executable: /bin/bash
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
 
+- name: "habd"
+  shell: |
+      sudo npm install -g n
+      sudo n 13.8.0
 
 - name: "Install PM2 Globally"
   npm:
