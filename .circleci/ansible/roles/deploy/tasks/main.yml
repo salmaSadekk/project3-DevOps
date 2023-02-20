@@ -25,7 +25,7 @@
     echo "TYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}" >> ".env"
     echo "TYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR}" >> ".env"
     pm2 stop default
-    pm2 start npm -- run "start:prod"
+    pm2 start npm -- run "start:dev"
 
   register: execute_node
 
