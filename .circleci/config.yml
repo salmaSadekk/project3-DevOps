@@ -340,15 +340,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            echo "TYPEORM_CONNECTION=${TYPEORM_CONNECTION}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_ENTITIES=${TYPEORM_ENTITIES}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_HOST=${TYPEORM_HOST}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_PORT=${TYPEORM_PORT}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_USERNAME=${TYPEORM_USERNAME}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_PASSWORD=${TYPEORM_PASSWORD}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_DATABASE=${TYPEORM_DATABASE}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}" >> "/home/ubuntu/backend/backend/dist/.env"
-            echo "TYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR}" >> "/home/ubuntu/backend/backend/dist/.env"
+
             pwd 
             tar  -czvf artifact.tar.gz     backend/dist/* backend/package* backend/src/*
             cd .circleci/ansible
