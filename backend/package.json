@@ -64,7 +64,8 @@
     "typeorm": "^0.2.24",
     "uuid": "^3.4.0",
     "winston-loggly-bulk": "^2.0.3",
-    "winston-slack-webhook": "^0.1.6"
+    "winston-slack-webhook": "^0.1.6",
+    "nodemon": "^1.19.4"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.11.11",
@@ -74,7 +75,6 @@
     "@types/node": "^11.15.9",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.4",
     "prettier": "^1.19.1",
     "rimraf": "^2.6.2",
     "standard-version": "^4.4.0",
