@@ -1,20 +1,19 @@
 ---
-- name: "Backend dir creation"
-  file:
-    path: ~/backend
-    state: directory
+
 
 - name: "Ungzip backend archive"
   unarchive:
     src:  ~/project/artifact.tar.gz
-    dest: ~/backend
+    dest: ~/
 
 
 - name: "Node install and Node app Execution using PM2"
   shell: |
-    cd /home/ubuntu/backend/backend
+    cd /home/ubuntu/backend
     npm install
-    cd /home/ubuntu/backend/backend/dist
+    cd /home/ubuntu/backend/dist
+    echo "testing ------------------------------------"
+    echo ${TYPEORM_CONNECTION}
     echo "TYPEORM_CONNECTION=${TYPEORM_CONNECTION}" >> ".env"
     echo "TYPEORM_ENTITIES=${TYPEORM_ENTITIES}" >> ".env"
     echo "TYPEORM_HOST=${TYPEORM_HOST}" >> ".env"
