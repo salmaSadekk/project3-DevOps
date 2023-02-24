@@ -60,7 +60,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl  -k   https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.workflowID>>)
+            SUCCESS=$(curl  -k   https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} )
             echo "----------------yalaaaaaaa ba2aa -------------------------------"
             echo $SUCCESS
             SUCCESS = 1
@@ -376,6 +376,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
+            curl -s $API_URL/api/status 
             if curl -s $API_URL/api/status | grep "ok"
             then
                 echo "success"
