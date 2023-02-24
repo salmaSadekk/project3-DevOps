@@ -376,8 +376,8 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            curl -s $API_URL/api/status 
-            if curl -s $API_URL/api/status | grep "ok"
+            curl -s $BACKEND_PUBLIC_IP/api/status 
+            if curl -s $BACKEND_PUBLIC_IP/api/status | grep "ok"
             then
                 echo "success"
                 exit 1
