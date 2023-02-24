@@ -61,8 +61,10 @@ commands:
           when: on_fail
           command: |
             SUCCESS=$(curl  -k   https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.workflowID>>)
+            echo "----------------yalaaaaaaa ba2aa -------------------------------"
+            echo $SUCCESS
             SUCCESS = 1
-            if(( $SUCCESS==1 ));
+            if(1);
             then
               cd ~/project/backend
               npm install
@@ -354,14 +356,10 @@ jobs:
 
   smoke-test:
     docker:
-   #   - image:  alpine
-      - image:   python:3.8-alpine3.15 
+      - image:  cimg/base:stable   
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update --no-cache curl aws-cli nodejs npm
+
       - run:
           name: Install AWS
           command: |
