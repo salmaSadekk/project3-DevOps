@@ -354,11 +354,19 @@ jobs:
 
   smoke-test:
     docker:
-      - image:  cimg/base:stable  
+   #   - image:  alpine
+      - image:   python:3.8-alpine3.15 
     steps:
       - checkout
-      - install_node13
-      - install_ansible 
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache curl aws-cli nodejs npm
+      - run:
+          name: Install AWS
+          command: |
+            sudo apt update
+            sudo apt  install awscli -y 
       - run:
           name: Get backend url
           command: |
@@ -388,6 +396,7 @@ jobs:
             else
                 exit 1
             fi
+
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - revert-migrations
