@@ -372,12 +372,15 @@ jobs:
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
+            echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030"
             echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030" >> frontend/.env
       - run:
           name: Backend smoke test.
           command: |
-            curl -s $BACKEND_PUBLIC_IP/api/status 
-            if curl -s $BACKEND_PUBLIC_IP/api/status | grep "ok"
+            export BACKEND_IP=$(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}"  --output text)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "${API_URL}"
+            if curl "${API_URL}/api/status" | grep "ok"
             then
                 echo "success"
                 exit 1
