@@ -397,8 +397,13 @@ jobs:
         - image: cimg/base:stable
         steps:
         - checkout
-        - install_awscli
-        - install_nodejs
+        - install_node13
+        - install_ansible 
+        - run:
+            name: Install AWS
+            command: |
+              sudo apt update
+              sudo apt  install awscli -y 
         - run:
             name: Save Old Workflow ID to kvdb.io
             command: |
