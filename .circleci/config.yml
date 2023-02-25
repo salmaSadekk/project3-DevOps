@@ -392,7 +392,7 @@ jobs:
       - revert-migrations
 
 
-    cloudfront-update:
+  cloudfront-update:
         docker:
         - image: cimg/base:stable
         steps:
